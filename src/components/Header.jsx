@@ -1,6 +1,8 @@
-import { useEffect } from "react"
-import { useState } from "react"
+import { useEffect,useState } from "react"
+import { Link } from "react-router-dom"
 import axios from "axios"
+import NewPost from "../pages/NewPost"
+
 
 export default function Header(){
     const [user, setUser] = useState(null);
@@ -19,10 +21,10 @@ export default function Header(){
         <header>
             <div className="d-flex flex-inline gap-6 bg-primary pt-3 px-3">
                 <div className="text-4xl font-bold text-white justify-start">
-                    Personal Blog
+                    Radioreactive
                 </div>
-                <div className="d-flex  gap-1 fs-1 justify-content-end  ">
-                    <p className='rounded-pill bg-white'><i className="bi bi-plus"/>Create Post</p>
+                <div className="d-flex  gap-1 fs-1 align-items-xl-end justify-content-xl-end flex-grow-1">
+                    <Link to="/createpost"><p className='rounded-pill bg-white text-decoration-none'><i className="bi bi-plus"/>Create Post</p></Link>
                     <p>Profile</p>
                     {user && (
                         <div className="text-primary rounded-full">

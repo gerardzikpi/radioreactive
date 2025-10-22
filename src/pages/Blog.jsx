@@ -1,25 +1,40 @@
+import { useParams } from "react-router-dom";
+import axios from "axios"
 import Button from "../components/Button";
 import Header from "../components/Header";  
-
+import posts from "../api/posts.js"
 export default function Blog(){
+    function renderPosts(){
+        return posts.fetchPosts
+    }
+
+    function blogPostDetail(){
+        const {id} = useParams();
+        return posts.fetchPost(id)
+    }
+
+    function deletePost(){
+        const {id} = useParams();
+        return posts.deletePost(id)
+    }
+
+    function updatePost(){
+        const {id} = useParams();
+        return posts.updatePost(id)
+    }
     return(
         <>
         <Header/>
         <h1 className="text-3xl font-bold  " >
             Posts
         </h1>
-        <Button/>
-        <div>
+        
+        <div onClick={blogPostDetail}>
             <ul className="list-group">
-                <li className="list-group-item">A simple default list group item</li>
-                <li className="list-group-item list-group-item-primary">A simple primary list group item</li>
-                <li className="list-group-item list-group-item-secondary">A simple secondary list group item</li>
-                <li className="list-group-item list-group-item-success">A simple success list group item</li>
-                <li className="list-group-item list-group-item-danger">A simple danger list group item</li>
-                <li className="list-group-item list-group-item-warning">A simple warning list group item</li>
-                <li className="list-group-item list-group-item-info">A simple info list group item</li>
-                <li className="list-group-item list-group-item-light">A simple light list group item</li>
-                <li className="list-group-item list-group-item-dark">A simple dark list group item</li>
+                <li className="list-group-item">
+                    <button className="btn btn-danger float-end" onClick={deletePost}>Delete Post</button>
+                    <button className="btn btn-primary float-end me-2" onClick={updatePost}>Update Post</button>
+                </li>
             </ul>
         </div>
         </>
