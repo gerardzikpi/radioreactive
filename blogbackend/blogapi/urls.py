@@ -6,4 +6,4 @@ router =routers.DefaultRouter()
 router.register(r'posts',BlogPostViewSet)
 router.register(r'user',BlogUserViewSet,basename='user')
 
-urlpatterns = router.urls
+urlpatterns =router.urls 
