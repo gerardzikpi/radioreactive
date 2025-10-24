@@ -7,7 +7,7 @@ export async function fetchPosts(params = {}) {
   return resp.data
 }
 
-export async function fetchPost(id) {
+export default async function fetchPost(id) {
   const resp = await axiosClient.get(`posts/${id}/`)
   return resp.data
 }
@@ -22,7 +22,7 @@ export async function updatePost(id, payload) {
   return resp.data
 }
 
-export async function deletePost(id) {
+export  async function deletePost(id) {
   const resp = await axiosClient.delete(`posts/${id}/`)
   return resp.data
 }

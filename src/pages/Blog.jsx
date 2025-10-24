@@ -3,23 +3,23 @@ import axios from "axios"
 import Button from "../components/Button";
 import Header from "../components/Header";  
 import posts from "../api/posts.js"
+
 export default function Blog(){
+    const {id} = useParams();
+    
     function renderPosts(){
         return posts.fetchPosts
     }
 
     function blogPostDetail(){
-        const {id} = useParams();
         return posts.fetchPost(id)
     }
 
     function deletePost(){
-        const {id} = useParams();
         return posts.deletePost(id)
     }
 
     function updatePost(){
-        const {id} = useParams();
         return posts.updatePost(id)
     }
     return(

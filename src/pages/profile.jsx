@@ -1,9 +1,21 @@
+import {useEffect} from 'react'
+import axios from 'axios'
+
 
 export default function Profile() {
+  useEffect(() => {
+    axios.get('/api/user')
+      .then(response => {response.json})
+      .then(response => {response.data})
+      .catch(error => {console.error('Error fetching user data:', error)})
   return (
-    <div>
-      <h1>User Profile</h1>
-      <p>This is the profile page.</p>
-    </div>
+    <>
+      <div className="rounded rounded-full bg-secondary">
+        <i className='bi bi-person'></i>
+      </div>
+      <div>
+        
+      </div>
+    </>
   )
 }

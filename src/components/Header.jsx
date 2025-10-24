@@ -29,8 +29,8 @@ export default function Header(){
                     {user && (
                         <div className="text-primary rounded-full">
                             <div className='text-large'>{user.name}</div>
-                            <div className='rounded-full'>
-                               {null? <i className="bi bi-person bg-secondary"/> : <img src={user.image} alt="Profile" style={{ borderRadius: "50%", width: "40px", height: "40px" }} />}
+                            <div className='rounded rounded-full'>
+                               {null? <i className="bi bi-person bg-secondary"/> : <img src={user.image} alt="Profile" style={{ borderRadius: "50%", width: "40px", height: "40px" }}  />}
                             </div>
                         </div>
                     )}
