@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import axiosClient, { setAuthToken } from "../api/axiosClient"
+import axiosClient, { setAuthTokens } from "../api/axiosClient"
 
 // Signin component — controlled inputs, loading/error states, and API call.
-// This project exposes a token endpoint at /api/token-auth/ (DRF authtoken).
-// axiosClient has baseURL '/api/' so we call the relative 'token-auth/' path.
-const AUTH_ENDPOINT = "token-auth/" // POST { username, password } -> { token }
+// This project exposes JWT endpoints at /api/token/ and /api/token/refresh/ (SimpleJWT).
+// axiosClient has baseURL '/api/' so we call the relative 'token/' path.
+const AUTH_ENDPOINT = "token/" // POST { username, password } -> { access, refresh }
 
 export default function Signin() {
     const [username, setUsername] = useState("")
@@ -25,10 +25,11 @@ export default function Signin() {
                 password,
             })
 
-            // Backend may return { token } or { access, refresh } or nothing (session auth).
-            const token = resp?.data?.token || resp?.data?.access || null
-            if (token) {
-                setAuthToken(token)
+            // Backend returns { access, refresh } for SimpleJWT
+            const access = resp?.data?.access || null
+            const refresh = resp?.data?.refresh || null
+            if (access && refresh) {
+                setAuthTokens({ access, refresh })
                 navigate("/")
                 return
             }
