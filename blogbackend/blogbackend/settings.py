@@ -68,7 +68,6 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     "authorization",
     "content-type",
     "x-csrftoken",
-    "allow-credentials",
 ]
 
 REST_FRAMEWORK = {
