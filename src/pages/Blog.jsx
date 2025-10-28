@@ -32,6 +32,8 @@ export default function Blog(){
         <div onClick={blogPostDetail}>
             <ul className="list-group">
                 <li className="list-group-item">
+                    {renderPosts.title}
+                    {renderPosts.body}
                     <button className="btn btn-danger float-end" onClick={deletePost}>Delete Post</button>
                     <button className="btn btn-primary float-end me-2" onClick={updatePost}>Update Post</button>
                 </li>

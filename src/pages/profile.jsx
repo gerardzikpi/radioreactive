@@ -8,6 +8,7 @@ export default function Profile() {
       .then(response => {response.json})
       .then(response => {response.data})
       .catch(error => {console.error('Error fetching user data:', error)})
+  })
   return (
     <>
       <div className="rounded rounded-full bg-secondary">

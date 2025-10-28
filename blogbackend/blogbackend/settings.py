@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'blogapi',
     'corsheaders',
     'rest_framework',
+    # Enable DRF token authentication (provides /api/token-auth/ endpoint)
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +57,9 @@ MIDDLEWARE = [
 
 AUTH_USER_MODEL = 'blogapi.BlogUser'
 
-CORS_ALLOWED_ORIGINS = ['https://localhost:5173','https://localhost5174']
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
+
+ACCESS_CONTROL_ALLOW_ALL_CREDENTIALS = True
 
 ROOT_URLCONF = 'blogbackend.urls'
 

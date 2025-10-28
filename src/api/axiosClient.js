@@ -4,7 +4,7 @@ import axios from 'axios'
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api/'
 
 const axiosClient = axios.create({
-	baseURL: BASE_URL,
+	baseURL: 'http://127.0.0.1:8000/api/',
 	timeout: 10000,
 	withCredentials: true, // send cookies for session auth (Django)
 	headers: {
