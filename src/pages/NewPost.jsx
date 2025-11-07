@@ -27,9 +27,9 @@ export default function NewPost(){
 
         try{
             const payload = {
-                heading,
-                content,
-                status
+                heading:'',
+                content:'',
+                status:''
             };
             const response = await createPost(payload)
 
