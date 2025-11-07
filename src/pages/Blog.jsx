@@ -1,44 +1,71 @@
-import { useParams } from "react-router-dom";
-import axios from "axios"
-import Button from "../components/Button";
-import Header from "../components/Header";  
-import posts from "../api/posts.js"
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import Header from "../components/Header"
+import { fetchPosts, deletePost as apiDeletePost } from "../api/posts"
 
-export default function Blog(){
-    const {id} = useParams();
-    
-    function renderPosts(){
-        return posts.fetchPosts
+export default function Blog() {
+    const [posts, setPosts] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+    const navigate = useNavigate()
+
+    async function loadPosts() {
+        setLoading(true)
+        setError(null)
+        try {
+            const data = await fetchPosts()
+            // data is expected to be an array of posts
+            setPosts(Array.isArray(data) ? data : data.results || [])
+        } catch (err) {
+            setError(err?.message || 'Failed to load posts')
+        } finally {
+            setLoading(false)
+        }
     }
 
-    function blogPostDetail(){
-        return posts.fetchPost(id)
+    useEffect(() => {
+        loadPosts()
+    }, [])
+
+    async function handleDelete(id) {
+        if (!confirm('Delete this post?')) return
+        try {
+            await apiDeletePost(id)
+            // refresh list
+            await loadPosts()
+        } catch (err) {
+            alert('Failed to delete post: ' + (err?.message || 'unknown'))
+        }
     }
 
-    function deletePost(){
-        return posts.deletePost(id)
-    }
-
-    function updatePost(){
-        return posts.updatePost(id)
-    }
-    return(
+    return (
         <>
-        <Header/>
-        <h1 className="text-3xl font-bold  " >
-            Posts
-        </h1>
-        
-        <div onClick={blogPostDetail}>
-            <ul className="list-group">
-                <li className="list-group-item">
-                    {renderPosts.title}
-                    {renderPosts.body}
-                    <button className="btn btn-danger float-end" onClick={deletePost}>Delete Post</button>
-                    <button className="btn btn-primary float-end me-2" onClick={updatePost}>Update Post</button>
-                </li>
-            </ul>
-        </div>
+            <Header />
+            <div className="container">
+                <h1 className="text-3xl font-bold">Posts</h1>
+
+                {loading && <div>Loading posts…</div>}
+                {error && <div className="text-danger">{error}</div>}
+
+                {!loading && !error && (
+                    <ul className="list-group">
+                        {posts.map((p) => (
+                            <li key={p.id} className="list-group-item d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 className="mb-1">{p.heading}</h5>
+                                    <p className="mb-1">{p.content}</p>
+                                    <small>By: {p.author?.username || p.author}</small>
+                                </div>
+
+                                <div className="btn-group">
+                                    <button className="btn btn-danger" onClick={() => handleDelete(p.id)}>Delete</button>
+                                    <button className="btn btn-primary" onClick={() => navigate(`/update/${p.id}`)}>Update</button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
         </>
     )
 }
